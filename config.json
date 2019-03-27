@@ -1,0 +1,16 @@
+{
+    "server": {
+        "port": 8090,
+        "throttling": {
+            "burst": 10,
+            "rate": 0.5,
+            "ip": true
+        }
+    },
+    "captcha": {
+        "size": 4,
+        "noise": 1,
+        "color": true,
+        "timeWindow": 120000
+    }
+}
