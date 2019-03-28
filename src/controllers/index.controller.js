@@ -4,7 +4,9 @@ async function getCaptcha(req, res, next) {
     let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
     if(await services.isInDatabase(ip)) {
-        res.send({error: `You've already requested a captcha, yet havn't solved it`});
+        // get user's svg
+        let svg = await services.retrieveSvg(ip);
+        res.send({error: `You've already requested a captcha, yet haven't solved it`, svg: svg});
         next(false);
     } else {
         let captcha = await services.generateCaptcha(ip);

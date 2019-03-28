@@ -14,7 +14,8 @@ async function generateCaptcha(ip) {
     // insert with ip into database
     await db.insert({
         ip: ip,
-        solution: captcha.text
+        solution: captcha.text,
+        svg: captcha.data
     });
 
     let entry = await db.find({ip: ip})[0];
@@ -41,6 +42,11 @@ async function checkCaptcha(ip, solution) {
     }
 }
 
+async function retrieveSvg(ip) {
+    let entry = await db.find({ip: ip})[0];
+    return entry.svg;
+}
+
 function removeIp(ip) {
     db.removeWhere({ip: ip});
     pino.info(`IP ${ip} removed from the database`);
@@ -61,5 +67,6 @@ module.exports = {
     generateCaptcha,
     isInDatabase,
     checkCaptcha,
-    removeIp
+    removeIp,
+    retrieveSvg
 }
