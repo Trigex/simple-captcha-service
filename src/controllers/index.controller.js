@@ -6,7 +6,7 @@ async function getCaptcha(req, res, next) {
     if(await services.isInDatabase(ip)) {
         // get user's svg
         let svg = await services.retrieveSvg(ip);
-        res.send({error: `You've already requested a captcha, yet haven't solved it`, svg: svg});
+        res.send({error: `You've already requested a captcha, yet haven't solved it`, captcha: svg});
         next(false);
     } else {
         let captcha = await services.generateCaptcha(ip);
